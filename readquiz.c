@@ -1,7 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "readquiz.h"
 
-int lines() {
+int filelines() {
     FILE *fp;
     int ch;
     int lines = 0;
@@ -17,6 +20,8 @@ int lines() {
     if(last_ch != '\n' && last_ch != EOF) {
         lines++;
     }
+    
+    fclose(fp);
 
     return lines;
 }
@@ -26,6 +31,8 @@ Quiz* setQuizes() {
     char buffer[BUFSIZE];
     char quiz[QUIZSIZE];
     char answer[ANSWERSIZE];
+
+    int lines = filelines();
     
     fp = fopen(FILENAME, "r");
 
@@ -34,9 +41,17 @@ Quiz* setQuizes() {
         return 1;
     }
 
-    if(fscanf(fp, "%[^|]|%[^\n]", quiz, answer) == 2) {
-        printf("quiz: %s\n", quiz);
-        printf("answer: %s\n", answer);
+    Quiz *Quizes = (Quiz *)malloc(sizeof(Quiz) * lines);
+
+    for(int i = 0; i < lines; i++){
+        if(fscanf(fp, " %[^|]|%[^\n]", quiz, answer) == 2) {
+            strcpy(Quizes[i].quiz, quiz);
+            strcpy(Quizes[i].answer, answer);
+        }
     }
- 
+
+    fclose(fp);
+
+    return Quizes;
+    //free(Quizes)
 }
