@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <process.h>
+#include "process.h"
 
 int Start_screen() {
 	int press;
