@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "readquiz.h"
 
 int filelines() {
@@ -38,20 +34,24 @@ Quiz* setQuizes() {
 
     if(fp == NULL) {
         printf("파일을 열 수 없습니다.");
-        return 1;
+        return NULL;
     }
 
-    Quiz *Quizes = (Quiz *)malloc(sizeof(Quiz) * lines);
+    Quiz *quizes = (Quiz *)malloc(sizeof(Quiz) * lines);
+    if(quizes == NULL) {
+        printf("Heap overflow\n");
+        return NULL;
+    }
 
     for(int i = 0; i < lines; i++){
         if(fscanf(fp, " %[^|]|%[^\n]", quiz, answer) == 2) {
-            strcpy(Quizes[i].quiz, quiz);
-            strcpy(Quizes[i].answer, answer);
+            strcpy(quizes[i].quiz, quiz);
+            strcpy(quizes[i].answer, answer);
         }
     }
 
     fclose(fp);
 
-    return Quizes;
+    return quizes;
     //free(Quizes)
 }
