@@ -16,6 +16,7 @@ process.o: process.c process.h
 answertest.o: answertest.c answertest.h
 readquiz.o: readquiz.c readquiz.h
 quizhandler.o: quizhandler.c quizhandler.h readquiz.h
+answertest.o: answertest.c quizhandler.h readquiz.h answertest.h
 #여기까지
 
 clean:
