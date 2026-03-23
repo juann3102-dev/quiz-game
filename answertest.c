@@ -18,18 +18,12 @@ void normalize(char* str) {
 }
 
 
-int checkAnswer(int quiznum) {
-    char quiz[QUIZSIZE];
+int checkAnswer(int quiznum, const char* userInput) {
     char answer[ANSWERSIZE];
     char input[ANSWERSIZE];
 
-    getQuiz(quiz, quiznum);
-    printf("%d번 문제 : %s\n", quiznum + 1, quiz);
-
-    printf("정답 입력: ");
-    fgets(input, sizeof(input), stdin);
-
-    input[strcspn(input, "\n")] = '\0';
+    strncpy(input, userInput, sizeof(input) - 1);
+    input[sizeof(input) - 1] = '\0'; 
 
     getAnswer(answer, quiznum);
 
@@ -37,12 +31,9 @@ int checkAnswer(int quiznum) {
     normalize(answer);
 
     if (strcmp(input, answer) == 0) {
-        printf("정답\n");
         return 1;
     }
     else {
-        printf("오답\n");
         return 0;
     }
-
 }
