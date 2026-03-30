@@ -59,6 +59,28 @@ int b(int num) {
 
 ```
 
+## Makefile 수정 방법
+만약 *우리가 만든* .h 파일을 include하는 경우 Makefile을 수정할 것.
+
+작성 시점 Makefile 구조는 이렇게 되어 있음.
+```
+# 님들이 수정할 부분
+main.o: main.c process.h answertest.h readquiz.h quizhandler.h
+process.o: process.c process.h
+answertest.o: answertest.c answertest.h
+readquiz.o: readquiz.c readquiz.h
+quizhandler.o: quizhandler.c quizhandler.h
+#여기까지
+```
+
+만약 너의 .c 파일에서 우리가 만든 .h 파일을 추가한다면 그걸 동일한 이름의 .o 파일로 시작되는 줄 마지막에 추가할 것.
+
+예를 들어 quizhandler.c를 쓰는데 readquiz.h를 include 했다면
+```
+quizhandler.o: quizhandler.c quizhandler.h readquiz.h
+```
+이런 식으로 추가할 것
+
 현재 .c 파일들
 * main.c
 * process.c
