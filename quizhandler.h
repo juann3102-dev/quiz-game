@@ -1,6 +1,8 @@
 #ifndef QUIZHANDLER_H
 #define QUIZHANDLER_H
 
+#include "readquiz.h"
+
 typedef struct Quizinfo {
     Quiz* quizes;
     int quizNum;

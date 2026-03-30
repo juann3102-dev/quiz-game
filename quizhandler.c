@@ -1,4 +1,3 @@
-#include "readquiz.h"
 #include "quizhandler.h"
 
 enum ERROR {INDEX, EMPTY};
