@@ -1,18 +1,22 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "process.h"
+#include "quizhandler.h"
+#include "readquiz.h"
+#include "answertest.h"
 
 int Start_screen() {
 	int press;
 
-	printf("ì•ˆë…•í•˜ì„¸ìš” í€´ì¦ˆ ê²Œì„ì— ì˜¤ì‹ ê²ƒì„ í™˜ì˜í•©ë‹ˆë‹¤.\n");
-	printf("1. í€´ì¦ˆ ì‹œì‘í•˜ê¸°\n");
-	printf("2. í”„ë¡œê·¸ë¨ ì¢…ë£Œí•˜ê¸°\n");
-
 	while (1) {
-		printf("ì„ íƒ: ");
+		printf("¾È³çÇÏ¼¼¿ä ÄûÁî °ÔÀÓ¿¡ ¿À½Å°ÍÀ» È¯¿µÇÕ´Ï´Ù.\n");
+		printf("1. ÄûÁî ½ÃÀÛÇÏ±â\n");
+		printf("2. ÇÁ·Î±×·¥ Á¾·áÇÏ±â\n");
+		printf("¼±ÅÃ: ");
 
 		if (scanf("%d", &press) != 1) {
-			printf("ìˆ«ìë¥¼ ì…ë ¥í•˜ì„¸ìš”!\n");
+			printf("¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä!\n");
 			while (getchar() != '\n');
 			continue;
 		}
@@ -20,8 +24,49 @@ int Start_screen() {
 		if (press == 1 || press == 2)
 			break;
 
-		printf("1 ë˜ëŠ” 2ë§Œ ì„ íƒ ê°€ëŠ¥í•©ë‹ˆë‹¤.\n");
+		printf("1 ¶Ç´Â 2¸¸ ¼±ÅÃ °¡´ÉÇÕ´Ï´Ù.\n");
+		system("cls");
 	}
 
 	return press;
+}
+
+void runQuiz() {
+    int quizNum = getQuizNum();
+    int score = 0;
+
+    char quiz[QUIZSIZE];
+    char userInput[ANSWERSIZE];
+
+    if (quizNum <= 0) {
+        printf("ÃâÁ¦ÇÒ ¹®Á¦°¡ ¾ø½À´Ï´Ù.\n");
+        return;
+    }
+
+    for (int i = 0; i < quizNum; i++) {
+        system("cls");   // Windows CMD ±âÁØ È­¸é Áö¿ì±â
+        getQuiz(quiz, i);
+
+        printf("===== ¹®Á¦ %d / %d =====\n", i + 1, quizNum);
+        printf("%s\n", quiz);
+        printf("Á¤´ä ÀÔ·Â: ");
+
+        fgets(userInput, sizeof(userInput), stdin);
+        userInput[strcspn(userInput, "\n")] = '\0';
+
+        if (checkAnswer(i, userInput)) {
+            printf("Á¤´äÀÔ´Ï´Ù!\n");
+            score++;
+        }
+        else {
+            printf("¿À´äÀÔ´Ï´Ù.\n");
+        }
+
+        printf("¿£ÅÍ¸¦ ´©¸£¸é ´ÙÀ½ ¹®Á¦·Î ³Ñ¾î°©´Ï´Ù...");
+        getchar();
+    }
+
+    system("cls");
+    printf("===== ÄûÁî Á¾·á =====\n");
+    printf("ÃÑ Á¡¼ö: %d / %d\n", score, quizNum);
 }
