@@ -21,8 +21,10 @@ int Start_screen() {
 			continue;
 		}
 
-		if (press == 1 || press == 2)
+		if (press == 1 || press == 2){
+			while (getchar() != '\n');
 			break;
+        }
 
 		printf("1 또는 2만 선택 가능합니다.\n");
 		system("cls");
